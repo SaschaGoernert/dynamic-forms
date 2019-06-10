@@ -1,12 +1,12 @@
 import { async, TestBed } from '@angular/core/testing';
 import { BsDynamicFormControlLabelComponent } from './dynamic-form-control-label.component';
-import { BsDynamicFormWrapperModule } from './dynamic-form-wrapper.module';
+import { BsDynamicFormControlLabelModule } from './dynamic-form-control-label.module';
 
 describe('BsDynamicFormControlLabelComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        BsDynamicFormWrapperModule
+        BsDynamicFormControlLabelModule
       ]
     });
   }));

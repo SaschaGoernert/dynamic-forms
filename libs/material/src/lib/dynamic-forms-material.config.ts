@@ -1,12 +1,11 @@
 import { DynamicFormArrayComponent, DynamicFormConfig, DynamicFormConfigService, DynamicFormGroupComponent } from '@dynamic-forms/core';
 import { MatDynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
 import { matDynamicFormInputConfig } from './dynamic-form-input/dynamic-form-input.config';
+import { matDynamicFormWrapperConfig } from './dynamic-form-wrapper/dynamic-form-wrapper.config';
 
 export const matDynamicFormConfig: DynamicFormConfig = {
   module: 'material',
-  wrapperConfig: {
-    types: []
-  },
+  wrapperConfig: matDynamicFormWrapperConfig,
   fieldConfig: {
     types: [
       { type: 'group', component: DynamicFormGroupComponent },

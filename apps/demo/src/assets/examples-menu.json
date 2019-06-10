@@ -30,6 +30,15 @@
       ]
     },
     {
+      "label": "Wrappers",
+      "items": [
+        {
+          "id": "wrappers-panel",
+          "label": "Panel"
+        }
+      ]
+    },
+    {
       "label": "Expressions",
       "items": [
         {
