@@ -3,6 +3,10 @@
     {
       "label": "Inputs",      
       "items": [
+        {
+          "id": "inputs-default", 
+          "label": "Default" 
+        },
         { 
           "id": "inputs-placeholder", 
           "label": "Placeholder" 
@@ -33,8 +37,12 @@
       "label": "Wrappers",
       "items": [
         {
-          "id": "wrappers-panel",
-          "label": "Panel"
+          "id": "wrappers-login-panel",
+          "label": "Login Panel"
+        },
+        {
+          "id": "wrappers-register-panel",
+          "label": "Register Panel"
         }
       ]
     },
@@ -42,15 +50,15 @@
       "label": "Expressions",
       "items": [
         {
-          "id": "login",
+          "id": "expressions-login",
           "label": "Login"
         },
         { 
-          "id": "register", 
+          "id": "expressions-register", 
           "label": "Register"
         },
         { 
-          "id": "finance", 
+          "id": "expressions-finance", 
           "label": "Finance" 
         }
       ]
