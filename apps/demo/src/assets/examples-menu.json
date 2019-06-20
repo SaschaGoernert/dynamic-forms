@@ -8,6 +8,10 @@
           "label": "Default" 
         },
         { 
+          "id": "inputs-label", 
+          "label": "Label" 
+        },
+        { 
           "id": "inputs-placeholder", 
           "label": "Placeholder" 
         },

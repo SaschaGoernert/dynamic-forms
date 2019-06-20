@@ -1,0 +1,84 @@
+{
+  "fields": [
+    {
+      "key": "register",
+      "type": "group",
+      "template": {
+        "label": "Register",
+        "fields": [
+          {
+            "key": "email",
+            "type": "control",
+            "template": {
+              "label": "Email",
+              "input": {
+                "type": "textbox",
+                "inputType": "email",
+                "placeholder": "Enter your email"
+              },
+              "validation": {
+                "required": true,
+                "email": true
+              }
+            }
+          },
+          {
+            "key": "password",
+            "type": "control",
+            "template": {
+              "label": "Password",
+              "input": {
+                "type": "textbox",
+                "inputType": "password",
+                "placeholder": "Enter your password"
+              },
+              "validation": {
+                "required": true
+              }
+            }
+          },
+          {
+            "key": "address",
+            "type": "group",
+            "template": {
+              "label": "Address"
+            },
+            "wrappers": [
+              "panel"
+            ],
+            "fields": [
+              {
+                "key": "town",
+                "type": "control",
+                "template": {
+                  "label": "Town",
+                  "input": {
+                    "type": "textbox",
+                    "placeholder": "Enter your town"
+                  },
+                  "validation": {
+                    "required": true
+                  }
+                }
+              },
+              {
+                "key": "street",
+                "type": "control",
+                "template": {
+                  "label": "Street",
+                  "input": {
+                    "type": "textbox",
+                    "placeholder": "Enter your street"
+                  },
+                  "validation": {
+                    "required": true
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

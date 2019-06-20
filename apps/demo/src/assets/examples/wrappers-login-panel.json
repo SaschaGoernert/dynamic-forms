@@ -1,0 +1,47 @@
+{
+  "fields": [
+    {
+      "key": "login",
+      "type": "group",
+      "template": {
+        "label": "Login"
+      },
+      "wrappers": [
+        "panel"
+      ],
+      "fields": [
+        {
+          "key": "email",
+          "type": "control",
+          "template": {
+            "label": "Email",
+            "input": {
+              "type": "textbox",
+              "inputType": "email",
+              "placeholder": "Enter your email"
+            },
+            "validation": {
+              "required": true,
+              "email": true
+            }
+          }
+        },
+        {
+          "key": "password",
+          "type": "control",
+          "template": {
+            "label": "Password",
+            "input": {
+              "type": "textbox",
+              "inputType": "password",
+              "placeholder": "Enter your password"
+            },
+            "validation": {
+              "required": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
