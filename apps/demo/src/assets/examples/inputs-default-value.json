@@ -35,8 +35,8 @@
         "label": "Datepicker",
         "input": {
           "type": "datepicker",
-          "defaultValue": "2019-01-01",
-          "placeholder": "Enter a date"
+          "placeholder": "Enter a date",
+          "defaultValue": "2019-01-01"
         }
       }
     },
@@ -47,8 +47,8 @@
         "label": "Numberbox",
         "input": {
           "type": "numberbox",
-          "defaultValue": 0.01,
-          "placeholder": "Enter a number"
+          "placeholder": "Enter a number",
+          "defaultValue": 0.01
         }        
       }
     },
@@ -102,8 +102,8 @@
         "label": "Textarea",
         "input": {
           "type": "textarea",
-          "defaultValue": "Text line 1\nText line 2",
-          "placeholder": "Enter a text"
+          "placeholder": "Enter a text",
+          "defaultValue": "Text line 1\nText line 2"
         }
       }
     },
@@ -114,47 +114,8 @@
         "label": "Textbox",
         "input": {
           "type": "textbox",
-          "defaultValue": "Text 1, Text 2",
-          "placeholder": "Enter a text"
-        }
-      }
-    },
-    {
-      "key": "email",
-      "type": "control",
-      "template": {
-        "label": "Email",
-        "input": {
-          "type": "textbox",
-          "defaultValue": "user@mail.com",
-          "inputType": "email",
-          "placeholder": "Enter an email"
-        }
-      }
-    },
-    {
-      "key": "password",
-      "type": "control",
-      "template": {
-        "label": "Password",
-        "input": {
-          "type": "textbox",
-          "defaultValue": "Test1234!",
-          "inputType": "password",
-          "placeholder": "Enter a password"
-        }
-      }
-    },
-    {
-      "key": "search",
-      "type": "control",
-      "template": {
-        "label": "Search",
-        "input": {
-          "type": "textbox",
-          "defaultValue": "angular forms JSON",
-          "inputType": "search",
-          "placeholder": "Enter a search text"
+          "placeholder": "Enter a text",
+          "defaultValue": "Text 1, Text 2"
         }
       }
     }

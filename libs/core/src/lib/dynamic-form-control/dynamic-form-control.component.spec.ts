@@ -1,10 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { DynamicFormInputComponent } from '../dynamic-form-input/dynamic-form-input.component';
-import { DynamicFormValidationComponent } from '../dynamic-form-validation/dynamic-form-validation.component';
 import { DynamicFormValidationService } from '../dynamic-form-validation/dynamic-form-validation.service';
 import { DynamicForm } from '../dynamic-form/dynamic-form';
 import { DynamicFormComponentFactory } from '../dynamic-form/dynamic-form-component.factory';
@@ -13,28 +10,30 @@ import { DynamicFormDefinition } from '../dynamic-form/dynamic-form-definition';
 import { DynamicFormControl } from './dynamic-form-control';
 import { DynamicFormControlDefinition } from './dynamic-form-control-definition';
 import { DynamicFormControlComponent } from './dynamic-form-control.component';
+import { DynamicFormControlModule } from './dynamic-form-control.module';
 
 @Component({
   selector: 'dynamic-input-test',
   template: `<div>Dynamic Input</div>`
 })
-class DynamicFormInputTestComponent extends DynamicFormInputComponent {}
+class DynamicFormInputTestComponent extends DynamicFormInputComponent {
+  constructor(protected validationService: DynamicFormValidationService) {
+    super(validationService);
+  }
+}
 
 @NgModule({
   imports: [
-    CommonModule,
-    ReactiveFormsModule
+    DynamicFormControlModule
   ],
   declarations: [
-    DynamicFormControlComponent,
-    DynamicFormValidationComponent,
     DynamicFormInputTestComponent
   ],
   providers: [
     {
       provide: DynamicFormConfigService,
       useValue: new DynamicFormConfigService({
-        module: 'core',
+        library: 'core',
         inputConfig: {
           types: [
             { type: 'input', component: DynamicFormInputTestComponent }
@@ -92,15 +91,9 @@ describe('DynamicFormControlComponent', () => {
 
   it('creates component template', () => {
     const formControlDebugElement = fixture.debugElement.query(By.css('div.dynamic-form-control'));
-    const formControlLabelDebugElement = formControlDebugElement.query(By.css('label'));
-    const formControlValidationDebugElement = formControlDebugElement.query(By.css('dynamic-form-validation'));
     const formControlElement = <HTMLElement>formControlDebugElement.nativeElement;
-    const formControlLabelElement = <HTMLElement>formControlLabelDebugElement.nativeElement;
-    const formControlValidationComponent = <DynamicFormValidationComponent>formControlValidationDebugElement.componentInstance;
 
     expect(formControlElement).toBeDefined();
-    expect(formControlLabelElement).toBeDefined();
-    expect(formControlValidationComponent.errors).toBe(component.control.errors);
   });
 
   it('sets dynamic form control to hidden', () => {

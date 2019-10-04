@@ -22,8 +22,11 @@ class DynamicFormTestComponent {
   template: `<ng-template #fieldContainer></ng-template>`
 })
 class DynamicFormWrapperTestComponent extends DynamicFormWrapper {
-  constructor(protected containerRef: ViewContainerRef) {
-    super(containerRef);
+  constructor(
+    protected containerRef: ViewContainerRef,
+    protected validationService: DynamicFormValidationService
+  ) {
+    super(containerRef, validationService);
   }
 }
 
@@ -31,13 +34,21 @@ class DynamicFormWrapperTestComponent extends DynamicFormWrapper {
   selector: 'dynamic-form-field-test',
   template: `<div>Dynamic Field</div>`
 })
-class DynamicFormFieldTestComponent extends DynamicFormFieldWrapper {}
+class DynamicFormFieldTestComponent extends DynamicFormFieldWrapper {
+  constructor(protected validationService: DynamicFormValidationService) {
+    super(validationService);
+  }
+}
 
 @Component({
   selector: 'dynamic-form-input-test',
   template: `<div>Dynamic Input</div>`
 })
-class DynamicFormInputTestComponent extends DynamicFormInputComponent {}
+class DynamicFormInputTestComponent extends DynamicFormInputComponent {
+  constructor(protected validationService: DynamicFormValidationService) {
+    super(validationService);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -50,7 +61,7 @@ class DynamicFormInputTestComponent extends DynamicFormInputComponent {}
     {
       provide: DYNAMIC_FORM_CONFIG,
       useValue: {
-        module: 'test',
+        library: 'test',
         wrapperConfig: {
           types: [
             { type: 'wrapper', component: DynamicFormWrapperTestComponent }

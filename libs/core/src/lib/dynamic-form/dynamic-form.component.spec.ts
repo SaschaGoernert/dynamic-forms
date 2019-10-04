@@ -1,18 +1,16 @@
 import { SimpleChange } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { DynamicFormEvaluationBuilder } from '../dynamic-form-evaluation/dynamic-form-evaluation.builder';
 import { DynamicFormExpressionBuilder } from '../dynamic-form-expression/dynamic-form-expression.builder';
-import { DynamicFormFieldComponent } from '../dynamic-form-field/dynamic-form-field.component';
 import { DynamicFormGroupComponent } from '../dynamic-form-group/dynamic-form-group.component';
 import { DynamicFormValidationBuilder } from '../dynamic-form-validation/dynamic-form-validation.builder';
-import { DynamicFormValidationComponent } from '../dynamic-form-validation/dynamic-form-validation.component';
 import { DynamicFormValidationService } from '../dynamic-form-validation/dynamic-form-validation.service';
 import { DynamicFormConfigService } from './dynamic-form-config.service';
 import { DynamicFormDefinition } from './dynamic-form-definition';
 import { DynamicFormBuilder } from './dynamic-form.builder';
 import { DynamicFormComponent } from './dynamic-form.component';
+import { DynamicFormModule } from './dynamic-form.module';
 
 describe('DynamicFormComponent', () => {
   let fixture: ComponentFixture<DynamicFormComponent>;
@@ -23,19 +21,13 @@ describe('DynamicFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule
-      ],
-      declarations: [
-        DynamicFormComponent,
-        DynamicFormFieldComponent,
-        DynamicFormGroupComponent,
-        DynamicFormValidationComponent
+        DynamicFormModule
       ],
       providers: [
         {
           provide: DynamicFormConfigService,
           useValue: new DynamicFormConfigService({
-            module: 'core'
+            library: 'core'
           })
         },
         DynamicFormBuilder,
@@ -53,10 +45,6 @@ describe('DynamicFormComponent', () => {
 
     component.definition = definition;
     component.model = model;
-    component.ngOnChanges({
-      definition: new SimpleChange(undefined, definition, true),
-      model: new SimpleChange(undefined, model, true)
-    });
 
     fixture.detectChanges();
   }));
@@ -116,5 +104,29 @@ describe('DynamicFormComponent', () => {
       value: component.formGroup.value,
       model: component.model
     });
+  });
+
+  it('reset calls reset of form field', () => {
+    spyOn(component.formField, 'reset');
+
+    component.reset();
+
+    expect(component.formField.reset).toHaveBeenCalled();
+  });
+
+  it('resetDefault calls resetDefault of form field', () => {
+    spyOn(component.formField, 'resetDefault');
+
+    component.resetDefault();
+
+    expect(component.formField.resetDefault).toHaveBeenCalled();
+  });
+
+  it('validate calls validate of form field', () => {
+    spyOn(component.formField, 'validate');
+
+    component.validate();
+
+    expect(component.formField.validate).toHaveBeenCalled();
   });
 });

@@ -3,20 +3,35 @@ import { async, TestBed } from '@angular/core/testing';
 import { DynamicFormControl } from '../dynamic-form-control/dynamic-form-control';
 import { DynamicFormControlDefinition } from '../dynamic-form-control/dynamic-form-control-definition';
 import { DynamicFormInputComponent } from '../dynamic-form-input/dynamic-form-input.component';
+import { DynamicFormValidationService } from '../dynamic-form-validation/dynamic-form-validation.service';
 import { DynamicForm } from '../dynamic-form/dynamic-form';
+import { DynamicFormConfigService } from '../dynamic-form/dynamic-form-config.service';
 import { DynamicFormDefinition } from '../dynamic-form/dynamic-form-definition';
 
 @Component({
   selector: 'dynamic-input-test',
   template: `<div>Dynamic Input</div>`
 })
-class DynamicFormInputTestComponent extends DynamicFormInputComponent {}
+class DynamicFormInputTestComponent extends DynamicFormInputComponent {
+  constructor(protected validationService: DynamicFormValidationService) {
+    super(validationService);
+  }
+}
 
 describe('DynamicFormInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         DynamicFormInputTestComponent
+      ],
+      providers: [
+        {
+          provide: DynamicFormConfigService,
+          useValue: new DynamicFormConfigService({
+            library: 'test'
+          })
+        },
+        DynamicFormValidationService
       ]
     });
   }));

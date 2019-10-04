@@ -2,8 +2,8 @@
  * Public API Surface of core
  */
 
-export * from './lib/dynamic-forms-core.config';
-export * from './lib/dynamic-forms-core.module';
+export * from './lib/dynamic-forms.config';
+export * from './lib/dynamic-forms.module';
 export * from './lib/dynamic-form/dynamic-form';
 export * from './lib/dynamic-form/dynamic-form-component.factory';
 export * from './lib/dynamic-form/dynamic-form-config';
@@ -21,7 +21,6 @@ export * from './lib/dynamic-form-control/dynamic-form-control-definition';
 export * from './lib/dynamic-form-control/dynamic-form-control-template';
 export * from './lib/dynamic-form-control/dynamic-form-control.component';
 export * from './lib/dynamic-form-evaluation/dynamic-form-evaluator';
-export * from './lib/dynamic-form-evaluation/dynamic-form-field-evaluator';
 export * from './lib/dynamic-form-evaluation/dynamic-form-evaluation.builder';
 export * from './lib/dynamic-form-expression/dynamic-form-expression';
 export * from './lib/dynamic-form-expression/dynamic-form-expression-change';
@@ -30,6 +29,7 @@ export * from './lib/dynamic-form-expression/dynamic-form-field-expression';
 export * from './lib/dynamic-form-expression/dynamic-form-field-expressions';
 export * from './lib/dynamic-form-field/dynamic-form-field';
 export * from './lib/dynamic-form-field/dynamic-form-field-definition';
+export * from './lib/dynamic-form-field/dynamic-form-field-evaluator';
 export * from './lib/dynamic-form-field/dynamic-form-field-template';
 export * from './lib/dynamic-form-field/dynamic-form-field.component';
 export * from './lib/dynamic-form-group/dynamic-form-group';
@@ -50,7 +50,6 @@ export * from './lib/dynamic-form-input/dynamic-form-select/dynamic-form-select'
 export * from './lib/dynamic-form-input/dynamic-form-textarea/dynamic-form-textarea';
 export * from './lib/dynamic-form-input/dynamic-form-textbox/dynamic-form-textbox';
 export * from './lib/dynamic-form-validation/dynamic-form-validation.builder';
-export * from './lib/dynamic-form-validation/dynamic-form-validation.component';
 export * from './lib/dynamic-form-validation/dynamic-form-validation.service';
 export * from './lib/dynamic-form-wrapper/dynamic-form-wrapper';
 export * from './lib/dynamic-form-wrapper/dynamic-form-wrapper-config';

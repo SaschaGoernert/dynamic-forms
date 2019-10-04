@@ -1,0 +1,196 @@
+{
+  "fields": [
+    {
+      "key": "checkbox",
+      "type": "control",
+      "template": {
+        "label": "Checkbox",
+        "input": {
+          "type": "checkbox",
+          "defaultValue": true
+        },
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    {
+      "key": "combobox",
+      "type": "control",
+      "template": {
+        "label": "Combobox",
+        "input": {
+          "type": "combobox",
+          "placeholder": "Enter a text",
+          "defaultValue": "Value1",
+          "options": [
+            "Value1",
+            "Value2",
+            "Value3"
+          ],
+          "minLength": 5,
+          "maxLength": 6,
+          "pattern": "^Value[0-9]$"
+        },
+        "validation": {
+          "required": true,
+          "minLength": true,
+          "maxLength": true,
+          "pattern": true
+        }
+      }
+    },
+    {
+      "key": "datepicker",
+      "type": "control",
+      "template": {
+        "label": "Datepicker",
+        "input": {
+          "type": "datepicker",
+          "placeholder": "Enter a date",
+          "defaultValue": "2019-01-01"
+        },
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    {
+      "key": "numberbox",
+      "type": "control",
+      "template": {
+        "label": "Numberbox",
+        "input": {
+          "type": "numberbox",
+          "placeholder": "Enter a number",
+          "defaultValue": 0.01,
+          "min": -5,
+          "max": 5
+        },
+        "validation": {
+          "required": true,
+          "min": true,
+          "max": true
+        }
+      }
+    },
+    {
+      "key": "radio",
+      "type": "control",
+      "template": {
+        "label": "Radio",
+        "input": {
+          "type": "radio",
+          "defaultValue": 2,
+          "options": [
+            {
+              "value": 1,
+              "label": "Option 1"
+            },
+            {
+              "value": 2,
+              "label": "Option 2"
+            }
+          ]
+        },
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    {
+      "key": "select",
+      "type": "control",
+      "template": {
+        "label": "Select",
+        "input": {
+          "type": "select",
+          "placeholder": "Select an option",
+          "defaultValue": 1,
+          "options": [
+            {
+              "value": 1,
+              "label": "Option 1"
+            },
+            {
+              "value": 2,
+              "label": "Option 2"
+            }
+          ]
+        },
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    {
+      "key": "textarea",
+      "type": "control",
+      "template": {
+        "label": "Textarea",
+        "input": {
+          "type": "textarea",
+          "placeholder": "Enter a text",
+          "defaultValue": "Text line 1\nText line 2"
+        },
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    {
+      "key": "textbox",
+      "type": "control",
+      "template": {
+        "label": "Textbox",
+        "input": {
+          "type": "textbox",
+          "placeholder": "Enter a text",
+          "defaultValue": "Text 1, Text 2",
+          "minLength": 5,
+          "maxLength": 20
+        },
+        "validation": {
+          "required": true,
+          "minLength": true,
+          "maxLength": true
+        }
+      }
+    },
+    {
+      "key": "email",
+      "type": "control",
+      "template": {
+        "label": "Email",
+        "input": {
+          "type": "textbox",
+          "inputType": "email",
+          "placeholder": "Enter an email",
+          "defaultValue": "user@gmail.com"
+        },
+        "validation": {
+          "required": true,
+          "email": true
+        }
+      }
+    },
+    {
+      "key": "password",
+      "type": "control",
+      "template": {
+        "label": "Password",
+        "input": {
+          "type": "textbox",
+          "inputType": "password",
+          "placeholder": "Enter a password",
+          "defaultValue": "Test1234!",
+          "pattern": "^(?=.*\\d)(?=.*[a-zA-Z]).{6,20}$"
+        },
+        "validation": {
+          "required": true,
+          "pattern": true
+        }
+      }
+    }
+  ]
+}

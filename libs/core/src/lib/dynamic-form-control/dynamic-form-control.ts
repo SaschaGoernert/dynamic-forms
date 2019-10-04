@@ -1,7 +1,9 @@
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DynamicFormFieldEvaluator } from '../dynamic-form-evaluation/dynamic-form-field-evaluator';
+import { debounceTime } from 'rxjs/operators';
 import { DynamicFormField } from '../dynamic-form-field/dynamic-form-field';
+import { DynamicFormFieldEvaluator } from '../dynamic-form-field/dynamic-form-field-evaluator';
+import { dynamicFormFieldDefaultDebounceTime } from '../dynamic-form-field/dynamic-form-field-options';
 import { DynamicFormInput } from '../dynamic-form-input/dynamic-form-input';
 import { DynamicFormControlDefinition } from './dynamic-form-control-definition';
 import { DynamicFormControlTemplate } from './dynamic-form-control-template';
@@ -13,18 +15,15 @@ export type DynamicFormControlEvaluator<FormInput extends DynamicFormInput = Dyn
 export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicFormInput> extends DynamicFormField<
   FormControl, DynamicFormControlTemplate<FormInput>, DynamicFormControlDefinition<FormInput>> {
 
-  protected _controlValue: Subscription;
+  protected _valueSubscription: Subscription;
   protected _evaluators: DynamicFormControlEvaluator[] = [];
   protected _validators: DynamicFormControlValidator[] = [];
 
   constructor(root: DynamicFormField, parent: DynamicFormField, definition: DynamicFormControlDefinition<FormInput>) {
     super(root, parent, definition);
-    this._model = this.getModel(parent, definition);
-    this._control = new FormControl(this._model);
-    this._controlValue = this._control.valueChanges.subscribe(value => {
-      this.parent.model[this.definition.key] = value;
-      this._model = this.parent.model[this.definition.key];
-    });
+    this._model = this.createModel();
+    this._control = this.createControl();
+    this._valueSubscription = this.createValueSubscription();
   }
 
   get evaluators() { return this._evaluators; }
@@ -46,22 +45,70 @@ export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicForm
   }
 
   destroy() {
-    this._controlValue.unsubscribe();
+    this._valueSubscription.unsubscribe();
   }
 
-  private getModel(parent: DynamicFormField, definition: DynamicFormControlDefinition<FormInput>): any {
-    if (parent.model[definition.key] === undefined) {
-      parent.model[definition.key] = this.getDefaultValue(definition.template.input);
+  reset() {
+    this._control.reset(null);
+  }
+
+  resetDefault() {
+    const defaultValue = this.getDefaultValue();
+    this._control.reset(defaultValue);
+  }
+
+  validate() {
+    this._control.markAsTouched();
+  }
+
+  private createModel() {
+    const key = this.definition.key;
+    if (this.parent.model[key] === undefined) {
+      this.parent.model[key] = this.getDefaultValue();
     }
-    return parent.model[definition.key];
+    return this.parent.model[key];
   }
 
-  private getDefaultValue(input: FormInput) {
+  private getDefaultValue() {
+    const input = this.definition.template.input;
     return input && input.defaultValue !== undefined ? input.defaultValue : null;
   }
 
+  private createControl() {
+    const options = { updateOn: this.updateOn };
+    return new FormControl(this._model, options);
+  }
+
+  private get updateOn() {
+    const update = this.options.update;
+    if (update === 'debounce' || typeof update === 'object') {
+      return 'change';
+    }
+    return update;
+  }
+
+  private createValueSubscription() {
+    const update = this.options.update;
+    const valueChanges = this._control.valueChanges;
+    const observer = { next: model => this.setModel(model) };
+    if (update === 'debounce') {
+      const time = dynamicFormFieldDefaultDebounceTime;
+      return valueChanges.pipe(debounceTime(time)).subscribe(observer);
+    }
+    if (typeof update === 'object') {
+      const time = update.time || dynamicFormFieldDefaultDebounceTime;
+      return valueChanges.pipe(debounceTime(time)).subscribe(observer);
+    }
+    return valueChanges.subscribe(observer);
+  }
+
+  private setModel(model) {
+    this.parent.model[this.definition.key] = model;
+    this._model = this.parent.model[this.definition.key];
+  }
+
   private getValidatorFunctions() {
-    return this._validators.filter(validator => validator.enabled)
+    return this._validators.filter(validator => !!validator.validatorFn)
       .map(validator => validator.validatorFn);
   }
 
@@ -69,14 +116,10 @@ export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicForm
     this._evaluators.forEach(evaluator => evaluator.func(this));
   }
 
-  private checkControl(): void {
+  private checkControl() {
     const disabled = this.parent.control.disabled || this.template.disabled || false;
     if (this.control.disabled !== disabled) {
-      if (disabled) {
-        this.control.disable();
-      } else {
-        this.control.enable();
-      }
+      return disabled ? this.control.disable() : this.control.enable();
     }
   }
 
@@ -89,16 +132,8 @@ export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicForm
   }
 
   private validatorsChanged(): boolean {
-    return this._validators.some(validator => {
-      const enabled = this.template.validation[validator.key];
-      const value = this.template.input[validator.key];
-      if (validator.enabled !== enabled || validator.value !== value) {
-        validator.enabled = enabled;
-        validator.value = value;
-        validator.validatorFn = enabled ? validator.factory(value) : null;
-        return true;
-      }
-      return false;
-    });
+    return this._validators
+      .map(validator => validator.checkChanges())
+      .some(change => !!change);
   }
 }

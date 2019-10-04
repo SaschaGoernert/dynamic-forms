@@ -8,31 +8,45 @@ import { DynamicFormConfigService } from '../dynamic-form/dynamic-form-config.se
 import { DynamicFormField } from './dynamic-form-field';
 import { DynamicFormFieldDefinition } from './dynamic-form-field-definition';
 import { DynamicFormFieldComponent } from './dynamic-form-field.component';
+import { DynamicFormFieldModule } from './dynamic-form-field.module';
 
 class DynamicFormFieldTest extends DynamicFormField {
   check() {}
   destroy() {}
+
+  reset() {}
+  resetDefault() {}
+  validate() {}
 }
 
 @Component({
   selector: 'dynamic-field-test',
   template: `<div>Dynamic Field</div>`
 })
-class DynamicFormFieldTestComponent extends DynamicFormFieldWrapper {}
+class DynamicFormFieldWrapperComponent extends DynamicFormFieldWrapper {
+  constructor(protected validationService: DynamicFormValidationService) {
+    super(validationService);
+  }
+}
 
 @NgModule({
+  imports: [
+    DynamicFormFieldModule
+  ],
   declarations: [
-    DynamicFormFieldComponent,
-    DynamicFormFieldTestComponent
+    DynamicFormFieldWrapperComponent
+  ],
+  entryComponents: [
+    DynamicFormFieldWrapperComponent
   ],
   providers: [
     {
       provide: DYNAMIC_FORM_CONFIG,
       useValue: {
-        module: 'test',
+        library: 'test',
         fieldConfig: {
           types: [
-            { type: 'field', component: DynamicFormFieldTestComponent }
+            { type: 'field', component: DynamicFormFieldWrapperComponent }
           ]
         }
       }
@@ -40,18 +54,15 @@ class DynamicFormFieldTestComponent extends DynamicFormFieldWrapper {}
     DynamicFormConfigService,
     DynamicFormValidationService,
     DynamicFormComponentFactory
-  ],
-  entryComponents: [
-    DynamicFormFieldTestComponent
   ]
 })
-class DynamicFormComponentFactoryTestModule {}
+class DynamicFormFieldComponentTestModule {}
 
-describe('DynamicFormFormFieldComponent', () => {
+describe('DynamicFormFieldComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        DynamicFormComponentFactoryTestModule
+        DynamicFormFieldComponentTestModule
       ]
     });
   }));
