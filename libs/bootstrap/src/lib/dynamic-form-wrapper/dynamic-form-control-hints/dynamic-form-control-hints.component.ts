@@ -13,5 +13,15 @@ export class BsDynamicFormControlHintsComponent extends DynamicFormWrapper<Dynam
     super(containerRef, validationService);
   }
 
-  get hints() { return this.field.template.hints; }
+  get hints() {
+    return this.field.template.hints;
+  }
+
+  get hasHints() {
+    return this.hints ? this.hints.hintStart || this.hints.hintEnd : false;
+  }
+
+  get showHints() {
+    return this.hasHints && !this.showErrors;
+  }
 }

@@ -1,13 +1,15 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { DynamicFormWrapper } from '@dynamic-forms/core';
+import { DynamicFormValidationService, DynamicFormWrapper } from '@dynamic-forms/core';
 
 @Component({
   selector: 'mat-dynamic-form-panel',
-  templateUrl: './dynamic-form-panel.component.html',
-  styleUrls: ['./dynamic-form-panel.component.scss']
+  templateUrl: './dynamic-form-panel.component.html'
 })
 export class MatDynamicFormPanelComponent extends DynamicFormWrapper {
-  constructor(protected containerRef: ViewContainerRef) {
-    super(containerRef);
+  constructor(
+    protected containerRef: ViewContainerRef,
+    protected validationService: DynamicFormValidationService
+  ) {
+    super(containerRef, validationService);
   }
 }
