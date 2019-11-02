@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
-import { ExamplesMenuItemsComponent } from './examples-menu-items.component';
+import { ExamplesMenuPanelComponent } from './examples-menu-panel.component';
 import { ExamplesMenuComponent } from './examples-menu.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { ExamplesMenuComponent } from './examples-menu.component';
   ],
   declarations: [
     ExamplesMenuComponent,
-    ExamplesMenuItemsComponent
+    ExamplesMenuPanelComponent
   ],
   exports: [
     ExamplesMenuComponent
