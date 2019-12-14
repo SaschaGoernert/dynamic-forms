@@ -1,3 +1,5 @@
-<div class="dynamic-form-array" [ngClass]="{ 'hidden': field.hidden, 'readonly': field.readonly }">
-  <div class="dynamic-form-array-label">{{ template.label }}</div>
+<div class="dynamic-form-array" [class.hidden]="field.hidden" [class.readonly]="field.readonly" [ngClass]="template?.className">
+  <ng-container *ngIf="template?.label">
+    <div class="dynamic-form-array-label">{{ template?.label }}</div>
+  </ng-container>
 </div>

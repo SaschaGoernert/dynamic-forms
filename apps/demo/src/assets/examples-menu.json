@@ -16,6 +16,10 @@
           "label": "Placeholder" 
         },
         { 
+          "id": "inputs-hints", 
+          "label": "Hints" 
+        },
+        { 
           "id": "inputs-default-value", 
           "label": "Default value" 
         },
@@ -26,10 +30,6 @@
         { 
           "id": "inputs-disabled", 
           "label": "Disabled"
-        },
-        { 
-          "id": "inputs-hints", 
-          "label": "Hints" 
         },
         {
           "label": "Variations",
@@ -99,6 +99,19 @@
         {
           "id": "options-update",
           "label": "Update strategy"
+        }
+      ]
+    },
+    {
+      "label": "Layout",
+      "items": [
+        {
+          "id": "layout-form-group",
+          "label": "Form group"
+        },
+        {
+          "id": "layout-element-container",
+          "label": "Element container"
         }
       ]
     }

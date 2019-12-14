@@ -32,11 +32,13 @@ describe('DynamicFormGroupComponent', () => {
     fixture = TestBed.createComponent(DynamicFormGroupComponent);
     component = fixture.componentInstance;
 
-    form = new DynamicForm(<DynamicFormDefinition>{ fields: [] } , {});
+    form = new DynamicForm(<DynamicFormDefinition>{ elements: [] } , {});
     formGroup = new DynamicFormGroup(form, form, <DynamicFormGroupDefinition>{
       key: 'key',
-      template: {},
-      fields: []
+      template: {
+        label: 'label'
+      },
+      elements: []
     });
     component.field = formGroup;
 
@@ -48,7 +50,7 @@ describe('DynamicFormGroupComponent', () => {
     expect(component.id).toBe('key');
     expect(component.template).toBeDefined();
     expect(component.control).toBeDefined();
-    expect(component.fields).toEqual([]);
+    expect(component.elements).toEqual([]);
   });
 
   it('creates component template', () => {
@@ -61,27 +63,54 @@ describe('DynamicFormGroupComponent', () => {
     expect(formGroupLabelElement).toBeDefined();
   });
 
+  it('hides dynamic form group label', () => {
+    component.template.label = null;
+    fixture.detectChanges();
+
+    const formGroupDebugElement = fixture.debugElement.query(By.css('div.dynamic-form-group'));
+    const formGroupLabelDebugElement = formGroupDebugElement.query(By.css('div.dynamic-form-group-label'));
+
+    expect(formGroupLabelDebugElement).toBeNull();
+  });
+
   it('sets dynamic form group to hidden', () => {
     const formGroupDebugElement = fixture.debugElement.query(By.css('div.dynamic-form-group'));
     const formGroupElement = <HTMLElement>formGroupDebugElement.nativeElement;
 
-    expect(formGroupElement.className).not.toContain('hidden');
+    expect(formGroupElement.className).toBe('dynamic-form-group');
 
     component.template.hidden = true;
     fixture.detectChanges();
 
-    expect(formGroupElement.className).toContain('hidden');
+    expect(formGroupElement.className).toBe('dynamic-form-group hidden');
   });
 
   it('sets dynamic form group to readonly', () => {
     const formGroupDebugElement = fixture.debugElement.query(By.css('div.dynamic-form-group'));
     const formGroupElement = <HTMLElement>formGroupDebugElement.nativeElement;
 
-    expect(formGroupElement.className).not.toContain('readonly');
+    expect(formGroupElement.className).toBe('dynamic-form-group');
 
     component.template.readonly = true;
     fixture.detectChanges();
 
-    expect(formGroupElement.className).toContain('readonly');
+    expect(formGroupElement.className).toBe('dynamic-form-group readonly');
+  });
+
+  it('sets class name of dynamic form group', () => {
+    const formGroupDebugElement = fixture.debugElement.query(By.css('div.dynamic-form-group'));
+    const formGroupElement = <HTMLElement>formGroupDebugElement.nativeElement;
+
+    expect(formGroupElement.className).toBe('dynamic-form-group');
+
+    component.template.className = 'className1 className2';
+    fixture.detectChanges();
+
+    expect(formGroupElement.className).toBe('dynamic-form-group className1 className2');
+
+    component.template.className = null;
+    fixture.detectChanges();
+
+    expect(formGroupElement.className).toBe('dynamic-form-group');
   });
 });
