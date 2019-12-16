@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BsDynamicFormControlErrorsModule } from './dynamic-form-control-errors/dynamic-form-control-errors.module';
 import { BsDynamicFormControlHintsModule } from './dynamic-form-control-hints/dynamic-form-control-hints.module';
 import { BsDynamicFormControlLabelModule } from './dynamic-form-control-label/dynamic-form-control-label.module';
-import { BsDynamicFormPanelModule } from './dynamic-form-panel/dynamic-form-panel.module';
+import { BsDynamicFormFieldPanelModule } from './dynamic-form-field-panel/dynamic-form-field-panel.module';
 
 @NgModule({
   imports: [
@@ -11,7 +11,7 @@ import { BsDynamicFormPanelModule } from './dynamic-form-panel/dynamic-form-pane
     BsDynamicFormControlErrorsModule,
     BsDynamicFormControlLabelModule,
     BsDynamicFormControlHintsModule,
-    BsDynamicFormPanelModule
+    BsDynamicFormFieldPanelModule
   ]
 })
 export class BsDynamicFormFieldWrapperModule {}

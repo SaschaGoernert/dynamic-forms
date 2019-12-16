@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDynamicFormPanelComponent } from './dynamic-form-panel.component';
+import { MatDynamicFormFieldPanelComponent } from './dynamic-form-field-panel.component';
 
 @NgModule({
   imports: [
@@ -9,10 +9,10 @@ import { MatDynamicFormPanelComponent } from './dynamic-form-panel.component';
     MatExpansionModule
   ],
   declarations: [
-    MatDynamicFormPanelComponent
+    MatDynamicFormFieldPanelComponent
   ],
   entryComponents: [
-    MatDynamicFormPanelComponent
+    MatDynamicFormFieldPanelComponent
   ]
 })
-export class MatDynamicFormPanelModule {}
+export class MatDynamicFormFieldPanelModule {}
