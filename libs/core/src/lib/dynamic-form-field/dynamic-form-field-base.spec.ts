@@ -1,6 +1,7 @@
+import { DynamicFormConfigService } from '../dynamic-form-config/dynamic-form-config.service';
+import { DynamicFormLibrary, DynamicFormLibraryName } from '../dynamic-form-config/dynamic-form-library';
 import { DynamicFormValidationConfig } from '../dynamic-form-validation/dynamic-form-validation-config';
 import { DynamicFormValidationService } from '../dynamic-form-validation/dynamic-form-validation.service';
-import { DynamicFormConfigService } from '../dynamic-form/dynamic-form-config.service';
 import { DynamicFormFieldBase } from './dynamic-form-field-base';
 
 class DynamicFormFieldBaseTest extends DynamicFormFieldBase {
@@ -10,17 +11,19 @@ class DynamicFormFieldBaseTest extends DynamicFormFieldBase {
 }
 
 describe('DynamicFormFieldBase', () => {
-  let validationConfig: DynamicFormValidationConfig;
+  const libraryName: DynamicFormLibraryName = 'test';
+  const library: DynamicFormLibrary = { name: libraryName };
+  const validationConfig: DynamicFormValidationConfig = {
+    defaultMessage: 'The field is invalid',
+    messages: {
+      required: 'The field is required'
+    },
+    libraryName
+  };
   let component: DynamicFormFieldBaseTest;
 
   beforeEach(() => {
-    validationConfig = {
-      defaultMessage: 'The field is invalid',
-      messages: {
-        required: 'The field is required'
-      }
-    };
-    const configService = new DynamicFormConfigService({ library: 'test', validationConfig });
+    const configService = new DynamicFormConfigService(library, null, null, null, null, [ validationConfig ]);
     const validationService = new DynamicFormValidationService(configService);
 
     component = new DynamicFormFieldBaseTest(validationService);
