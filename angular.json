@@ -137,6 +137,7 @@
             "polyfills": "apps/demo/src/polyfills.ts",
             "tsConfig": "apps/demo/src/tsconfig.app.json",
             "assets": [
+              "apps/demo/src/web.config",
               "apps/demo/src/favicon.ico",
               "apps/demo/src/assets"
             ],
@@ -152,6 +153,10 @@
                 {
                   "replace": "apps/demo/src/environments/environment.ts",
                   "with": "apps/demo/src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "apps/demo/src/configs/app-config.ts",
+                  "with": "apps/demo/src/configs/app-config.prod.ts"
                 }
               ],
               "optimization": true,

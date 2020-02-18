@@ -8,6 +8,7 @@ export interface DynamicFormFieldDefinition<
   Template extends DynamicFormFieldTemplate = DynamicFormFieldTemplate
 > extends DynamicFormElementDefinition<Template> {
   key?: string;
+  index?: number;
   options?: DynamicFormFieldOptions;
   evaluations?: { key?: string, func?: DynamicFormFieldEvaluatorFunction }[];
   expressions?: { [key: string]: string | DynamicFormFieldExpressionFunction };

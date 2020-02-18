@@ -23,10 +23,23 @@ describe('DynamicFormFieldBase', () => {
   let component: DynamicFormFieldBaseTest;
 
   beforeEach(() => {
-    const configService = new DynamicFormConfigService(library, null, null, null, null, [ validationConfig ]);
+    const configService = new DynamicFormConfigService(library, null, null, null, null, null, [ validationConfig ]);
     const validationService = new DynamicFormValidationService(configService);
 
     component = new DynamicFormFieldBaseTest(validationService);
+  });
+
+  it('errors returns errors from control', () => {
+    const field = <any>{ id: 'id', key: 'key', index: 1, path: 'path', control: {} };
+    component.field = field;
+
+    expect(component.id).toBe('id');
+    expect(component.key).toBe('key');
+    expect(component.index).toBe(1);
+    expect(component.path).toBe('path');
+    expect(component.element).toBe(field);
+    expect(component.field).toBe(field);
+    expect(component.control).toBe(field.control);
   });
 
   it('errors returns errors from control', () => {

@@ -9,33 +9,38 @@ import { DynamicFormControlDefinition } from './dynamic-form-control-definition'
 import { DynamicFormControlTemplate } from './dynamic-form-control-template';
 import { DynamicFormControlValidator } from './dynamic-form-control-validator';
 
-export type DynamicFormControlEvaluator<FormInput extends DynamicFormInput = DynamicFormInput> =
-  DynamicFormFieldEvaluator<DynamicFormControl<FormInput>>;
+export type DynamicFormControlEvaluator<Input extends DynamicFormInput = DynamicFormInput> =
+  DynamicFormFieldEvaluator<DynamicFormControl<Input>>;
 
-export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicFormInput>
-  extends DynamicFormField<FormControl, DynamicFormControlTemplate<FormInput>, DynamicFormControlDefinition<FormInput>> {
+export class DynamicFormControl<
+  Input extends DynamicFormInput = DynamicFormInput,
+  Template extends DynamicFormControlTemplate<Input> = DynamicFormControlTemplate<Input>,
+  Definition extends DynamicFormControlDefinition<Input, Template> = DynamicFormControlDefinition<Input, Template>
+> extends DynamicFormField<FormControl, Template, Definition> {
 
   protected _valueSubscription: Subscription;
   protected _evaluators: DynamicFormControlEvaluator[] = [];
   protected _validators: DynamicFormControlValidator[] = [];
 
-  constructor(root: DynamicFormField, parent: DynamicFormField, definition: DynamicFormControlDefinition<FormInput>) {
+  constructor(root: DynamicFormField, parent: DynamicFormField, definition: Definition) {
     super(root, parent, definition);
     this._model = this.createModel();
     this._control = this.createControl();
     this._valueSubscription = this.createValueSubscription();
   }
 
-  get inputType() { return this.template.input.type; }
+  get input() { return this.template.input; }
+  get inputId() { return this.id || this.path; }
+  get inputComponentType() { return this.input.type; }
 
   get evaluators() { return this._evaluators; }
   get validators() { return this._validators; }
 
-  setEvaluators(evaluators: DynamicFormControlEvaluator[]) {
+  initEvaluators(evaluators: DynamicFormControlEvaluator[]) {
     this._evaluators = evaluators || [];
   }
 
-  setValidators(validators: DynamicFormControlValidator[]) {
+  initValidators(validators: DynamicFormControlValidator[]) {
     this._validators = validators || [];
     this._control.setValidators(this.getValidatorFunctions());
   }
@@ -64,11 +69,10 @@ export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicForm
   }
 
   private createModel() {
-    const key = this.definition.key;
-    if (this.parent.model[key] === undefined) {
-      this.parent.model[key] = this.getDefaultValue();
+    if (this.parent.model[this.key] === undefined) {
+      this.parent.model[this.key] = this.getDefaultValue();
     }
-    return this.parent.model[key];
+    return this.parent.model[this.key];
   }
 
   private getDefaultValue() {
@@ -105,8 +109,8 @@ export class DynamicFormControl<FormInput extends DynamicFormInput = DynamicForm
   }
 
   private setModel(model) {
-    this.parent.model[this.definition.key] = model;
-    this._model = this.parent.model[this.definition.key];
+    this.parent.model[this.key] = model;
+    this._model = this.parent.model[this.key];
   }
 
   private getValidatorFunctions() {

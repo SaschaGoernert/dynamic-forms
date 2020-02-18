@@ -1,0 +1,100 @@
+{
+  "template": {
+    "className": "grid"
+  },
+  "elements": [
+    {
+      "key": "users",
+      "type": "array",
+      "template": {
+        "label": "Users"
+      },
+      "definitionTemplate": {
+        "type": "group",
+        "template": {
+          "className": "row"
+        },
+        "elements": [
+          {
+            "key": "id",
+            "type": "control",
+            "template": {
+              "className": "col-2",
+              "label": "Id",
+              "input": {
+                "type": "textbox"
+              },
+              "readonly": true
+            }
+          },
+          {
+            "key": "name",
+            "type": "control",
+            "template": {
+              "className": "col-4",
+              "label": "Name",
+              "input": {
+                "type": "textbox",
+                "placeholder": "Enter name"
+              },
+              "validation": {
+                "required": true
+              }
+            }
+          },
+          {
+            "key": "email",
+            "type": "control",
+            "template": {
+              "className": "col-6",
+              "label": "Email",
+              "input": {
+                "type": "textbox",
+                "placeholder": "Enter email"
+              },
+              "validation": {
+                "required": true,
+                "email": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "actions": [
+    {
+      "type": "button",
+      "template": {
+        "type": "submit",
+        "label": "Submit"
+      },
+      "expressions": {
+        "disabled": "rootStatus !== 'VALID'"
+      }
+    },
+    {
+      "type": "button",
+      "template": {
+        "type": "button",
+        "label": "Validate",
+        "action": "validate"
+      }
+    },
+    {
+      "type": "button",
+      "template": {
+        "type": "reset",
+        "label": "Reset"
+      }
+    },
+    {
+      "type": "button",
+      "template": {
+        "type": "button",
+        "label": "Reset default",
+        "action": "resetDefault"
+      }
+    }
+  ]
+}

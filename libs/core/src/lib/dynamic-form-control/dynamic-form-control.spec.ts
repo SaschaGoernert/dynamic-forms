@@ -11,17 +11,26 @@ import { DynamicFormControlValidator } from './dynamic-form-control-validator';
 describe('DynamicFormControl', () => {
   it('new instance', () => {
     const root = new DynamicForm(<DynamicFormDefinition>{ elements: [] } , {});
-    const definition = <DynamicFormControlDefinition>{ key: 'key', template: {} };
+    const definition = <DynamicFormControlDefinition>{ key: 'key', index: 1, type: 'componentType', template: {} };
     const formControl = new DynamicFormControl(root, root, definition);
 
-    expect(formControl.path).toBe('key');
     expect(formControl.root).toBe(root);
     expect(formControl.parent).toBe(root);
     expect(formControl.definition).toBe(definition);
     expect(formControl.template).toBe(definition.template);
 
+    expect(formControl.key).toBe('key');
+    expect(formControl.index).toBe(1);
+    expect(formControl.path).toBe('key');
+    expect(formControl.classType).toBe('field');
+    expect(formControl.componentType).toBe('componentType');
+
     expect(formControl.model).toBeNull();
     expect(formControl.control).toBeDefined();
+    expect(formControl.status).toBe('VALID');
+
+    expect(formControl.elements).toEqual([]);
+    expect(formControl.actions).toEqual([]);
     expect(formControl.evaluators).toEqual([]);
     expect(formControl.validators).toEqual([]);
 
@@ -88,7 +97,7 @@ describe('DynamicFormControl', () => {
     const definition = <DynamicFormControlDefinition>{ key: 'key', template: {} };
     const formControl = new DynamicFormControl(root, root, definition);
 
-    formControl.setEvaluators(null);
+    formControl.initEvaluators(null);
 
     expect(formControl.evaluators).toEqual([]);
   });
@@ -99,7 +108,7 @@ describe('DynamicFormControl', () => {
     const formControl = new DynamicFormControl(root, root, definition);
     const evaluators = [ { func: (_) => {} } ];
 
-    formControl.setEvaluators(evaluators);
+    formControl.initEvaluators(evaluators);
 
     expect(formControl.evaluators).toEqual(evaluators);
   });
@@ -109,7 +118,7 @@ describe('DynamicFormControl', () => {
     const definition = <DynamicFormControlDefinition>{ key: 'key', template: {} };
     const formControl = new DynamicFormControl(root, root, definition);
 
-    formControl.setValidators(null);
+    formControl.initValidators(null);
 
     expect(formControl.validators).toEqual([]);
   });
@@ -122,7 +131,7 @@ describe('DynamicFormControl', () => {
       { key: 'required', validatorFn: Validators.required }
     ];
 
-    formControl.setValidators(formControlValidators);
+    formControl.initValidators(formControlValidators);
 
     expect(formControl.validators).toEqual(formControlValidators);
   });
@@ -132,7 +141,7 @@ describe('DynamicFormControl', () => {
     const definition = <DynamicFormControlDefinition>{ key: 'key', template: {} };
     const formControl = new DynamicFormControl(root, root, definition);
 
-    formControl.setValidators(null);
+    formControl.initValidators(null);
     formControl.control.updateValueAndValidity();
 
     expect(formControl.control.validator).toBeNull();
@@ -147,7 +156,7 @@ describe('DynamicFormControl', () => {
       { key: 'required', validatorFn: Validators.required }
     ];
 
-    formControl.setValidators(formControlValidators);
+    formControl.initValidators(formControlValidators);
     formControl.control.updateValueAndValidity();
 
     expect(formControl.control.validator).not.toBeNull();
@@ -187,7 +196,7 @@ describe('DynamicFormControl', () => {
       new DynamicFormControlValidator('required', definition.template, _ => Validators.required)
     ];
 
-    formControl.setValidators(formControlValidators);
+    formControl.initValidators(formControlValidators);
     formControl.control.updateValueAndValidity();
 
     expect(formControl.control.valid).toBe(false);
@@ -284,7 +293,7 @@ describe('DynamicFormControl', () => {
         }
       };
       const formControl = new DynamicFormControl<DynamicFormSelect>(root, root, definition);
-      formControl.setEvaluators([
+      formControl.initEvaluators([
         { func: DynamicFormControlEvaluators.evalSelect }
       ]);
 

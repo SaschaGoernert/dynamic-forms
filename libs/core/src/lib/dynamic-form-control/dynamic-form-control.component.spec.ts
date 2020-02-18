@@ -34,12 +34,12 @@ class DynamicFormInputTestComponent extends DynamicFormInputBase {
   providers: [
     {
       provide: DYNAMIC_FORM_LIBRARY,
-      useValue: 'test'
+      useValue: { name: 'test' }
     },
     {
       provide: DYNAMIC_FORM_INPUT_TYPES,
       useValue: [
-        { library: 'test', type: 'input', component: DynamicFormInputTestComponent }
+        { libraryName: 'test', type: 'input', component: DynamicFormInputTestComponent }
       ]
     },
     DynamicFormConfigService,
@@ -70,7 +70,9 @@ describe('DynamicFormControlComponent', () => {
 
     form = new DynamicForm(<DynamicFormDefinition>{ elements: [] } , {});
     formControl = new DynamicFormControl(form, form, <DynamicFormControlDefinition>{
+      id: 'id',
       key: 'key',
+      index: 1,
       template: {
         input: {
           type: 'input'
@@ -84,7 +86,10 @@ describe('DynamicFormControlComponent', () => {
   }));
 
   it('creates component', () => {
-    expect(component.id).toBe('key');
+    expect(component.id).toBe('id');
+    expect(component.key).toBe('key');
+    expect(component.index).toBe(1);
+    expect(component.path).toBe('key');
     expect(component.template).toBeDefined();
     expect(component.control).toBeDefined();
     expect(component.input).toBeDefined();
